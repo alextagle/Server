@@ -1,0 +1,12 @@
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbprojAssemblyReference.cache
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Form1.resources
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Resources.resources
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbproj.GenerateResource.cache
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Server.exe.config
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Server.exe
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Server.pdb
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Server.xml
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.exe
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.xml
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.pdb
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Form2.resources
