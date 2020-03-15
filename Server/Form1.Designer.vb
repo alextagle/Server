@@ -78,6 +78,7 @@ Partial Class Form1
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox5 = New System.Windows.Forms.PictureBox()
         Me.PictureBox6 = New System.Windows.Forms.PictureBox()
+        Me.Button8 = New System.Windows.Forms.Button()
         Me.Panel3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -326,6 +327,7 @@ Partial Class Form1
         'Panel5
         '
         Me.Panel5.BackColor = System.Drawing.Color.LightGray
+        Me.Panel5.Controls.Add(Me.Button8)
         Me.Panel5.Controls.Add(Me.Button1)
         Me.Panel5.Controls.Add(Me.RichTextBox1)
         Me.Panel5.Controls.Add(Me.Button2)
@@ -341,7 +343,7 @@ Partial Class Form1
         '
         Me.Button1.BackColor = System.Drawing.Color.Silver
         Me.Button1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button1.Location = New System.Drawing.Point(3, 11)
+        Me.Button1.Location = New System.Drawing.Point(3, 9)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(92, 32)
         Me.Button1.TabIndex = 8
@@ -360,7 +362,7 @@ Partial Class Form1
         '
         Me.Button2.BackColor = System.Drawing.Color.Silver
         Me.Button2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Button2.Location = New System.Drawing.Point(119, 10)
+        Me.Button2.Location = New System.Drawing.Point(95, 9)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(92, 33)
         Me.Button2.TabIndex = 9
@@ -676,6 +678,16 @@ Partial Class Form1
         Me.PictureBox6.TabIndex = 7
         Me.PictureBox6.TabStop = False
         '
+        'Button8
+        '
+        Me.Button8.BackgroundImage = Global.Server.My.Resources.Resources.exitIcon
+        Me.Button8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
+        Me.Button8.Location = New System.Drawing.Point(188, 9)
+        Me.Button8.Name = "Button8"
+        Me.Button8.Size = New System.Drawing.Size(40, 33)
+        Me.Button8.TabIndex = 14
+        Me.Button8.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -768,4 +780,5 @@ Partial Class Form1
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents PictureBox5 As PictureBox
     Friend WithEvents PictureBox6 As PictureBox
+    Friend WithEvents Button8 As Button
 End Class

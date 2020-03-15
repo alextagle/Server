@@ -326,7 +326,7 @@ Public Class Form1
 
     Private Sub rollBtnP2_Click(sender As Object, e As EventArgs) Handles rollBtnP2.Click
         'rollDiceP2()
-        RollBtnP1.Enabled = True
+        'RollBtnP1.Enabled = True
         ''scoreP2 = random
         'pieceP2.Visible = True
 
@@ -840,6 +840,39 @@ Public Class Form1
 
     Private Sub Button8_Click(sender As Object, e As EventArgs)
         Panel4.Visible = True
+    End Sub
+
+    Private Sub Button8_Click_1(sender As Object, e As EventArgs) Handles Button8.Click
+
+        '********************** player 1 ***************
+        x1 = -56
+        y1 = 501
+        pieceP1.Location = New Point(x1, y1)
+        'Dim x2 = 36, y2 = 501
+        p = 0
+        dice = 0
+
+
+        '*********************player 2 *****************
+        x2 = -56 + 32
+        y2 = 501
+        pieceP2.Location = New Point(x2, y2)
+        q = 0
+        '******************* randomizer ******************
+
+        positionVal.Text = 0
+        positionVal2.Text = 0
+
+        prevVal.Text = ""
+        prevVal2.Text = ""
+        StopServer()
+
+        Button1.Text = "Start"
+        Button2.Text = "Stop"
+
+        wait(500)
+        Panel4.Visible = True
+
     End Sub
 
     Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
