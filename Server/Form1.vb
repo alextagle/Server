@@ -11,7 +11,8 @@ Imports System.Windows.Forms
 
 Public Class Form1
     'Dim game As New Form2
-
+    Dim loadingscreen As New loadingScreen
+    '' Dim menu As New mainMenu
     Dim ServerStatus As Boolean = False
     Dim ServerTrying As Boolean = False
     Dim Server As TcpListener
@@ -44,8 +45,15 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         CheckForIllegalCrossThreadCalls = False
-
+        loadingscreen.ShowDialog()
+        'menu.ShowDialog()
+        'Me.Dispose()
         '***********
+
+
+        RollBtnP1.Enabled = False
+        rollBtnP2.Enabled = False
+
 
         'rollBtnP2.Enabled = False
         'rollDiceP1()
@@ -55,7 +63,6 @@ Public Class Form1
         snakeBites2()
         ladder2()
 
-
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs)
@@ -63,12 +70,14 @@ Public Class Form1
     End Sub
 
     Function StartServer()
+
         If ServerStatus = False Then
             ServerTrying = True
             Try
                 Server = New TcpListener(IPAddress.Any, 63861)
                 Server.Start()
                 Button1.Text = "Started"
+                Button2.Text = "Stop"
                 ServerStatus = True
                 Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
 
@@ -85,6 +94,11 @@ Public Class Form1
         StopServer()
     End Sub
     Function StopServer()
+        Button2.Text = "Stopped"
+        Button1.Text = "Start"
+        RollBtnP1.Enabled = False
+        rollBtnP2.Enabled = False
+
         If ServerStatus = True Then
             ServerTrying = True
             Try
@@ -106,6 +120,8 @@ Public Class Form1
         Try
             Using Client As TcpClient = Server.AcceptTcpClient
                 Console.Beep()
+
+                RollBtnP1.Enabled = True
 
                 If ServerTrying = False Then
                     Threading.ThreadPool.QueueUserWorkItem(AddressOf Handler_Client)
@@ -129,8 +145,11 @@ Public Class Form1
                                 diceP1.Image = My.Resources.ResourceManager.GetObject("_" & RawData)
                                 diceLabel.Text = RawData
                                 dice = RawData
+
+                                TextBox2.Text = dice
                                 diceP1.SizeMode = PictureBoxSizeMode.StretchImage
 
+                                prevVal2.Text = positionVal2.Text
 
                                 'rollDiceP1()
 
@@ -149,12 +168,11 @@ Public Class Form1
                                 '********************************
 
                                 If (player2 = True) Then
-                                        'x1 += 60
-                                        'pieceP1.Location = New Point(x1, y1)
-                                        'stepLimiter()
-                                        'Mover(q, x2, y2, pieceP2)
-
-                                        Mover2()
+                                    'x1 += 60
+                                    'pieceP1.Location = New Point(x1, y1)
+                                    'stepLimiter()
+                                    'Mover(q, x2, y2, pieceP2)
+                                    Mover2()
 
                                 End If
                                     If (diceLabel.Text = "6" AndAlso player2 = False) Then
@@ -261,22 +279,21 @@ Public Class Form1
 
     ' ***************************************************************************************************************
 
-    Private Sub rollBtnP1_Click(sender As Object, e As EventArgs) Handles rollBtnP1.Click
-        'diceTimer.Start()
+    Private Sub RollBtnP1_Click(sender As Object, e As EventArgs) Handles RollBtnP1.Click
 
+        'btnSound()
+        'diceTimer.Start()
+        'Timer2.Start()
         rollDiceP1()
 
-        'If flag = False Then
-        '    rollBtnP1.Enabled = False
-        '    rollBtnP2.Enabled = False
+        RollBtnP1.Enabled = False
+        rollBtnP2.Enabled = True
+        Label2.Visible = False
 
-        'Else
-        '    rollBtnP1.Enabled = True
-        '    rollBtnP2.Enabled = False
-        'End If
         'passing this data to client 
         TextBox1.Text = diceLabel.Text
         Threading.ThreadPool.QueueUserWorkItem(AddressOf SendToClients, TextBox1.Text)
+
 
         'scoreP1 = random
         ' playerTwo.Visible = True
@@ -286,13 +303,14 @@ Public Class Form1
         'Label2.Visible = True
 
         If (player1 = True) Then
+            pieceP1.Visible = True
             'x1 += 60
             'pieceP1.Location = New Point(x1, y1)
             'stepLimiter()
             Mover(p, x1, y1, pieceP1)
 
         End If
-        If (diceLabel.Text = "6" AndAlso player1 = False) Then
+        If (diceLabel.Text = 6 AndAlso player1 = False) Then
             pieceP1.Visible = True
             '             playerOne.Visible = False
 
@@ -307,48 +325,47 @@ Public Class Form1
     End Sub
 
     Private Sub rollBtnP2_Click(sender As Object, e As EventArgs) Handles rollBtnP2.Click
-        rollDiceP1()
+        'rollDiceP2()
+        RollBtnP1.Enabled = True
+        ''scoreP2 = random
+        'pieceP2.Visible = True
 
-        'scoreP2 = random
-        pieceP2.Visible = True
+        ''  playerOne.Visible = True
+        '' playerTwo.Visible = False
+        ''rollBtnP1.Enabled = True
+        ''rollBtnP2.Enabled = False
+        '' Label1.Visible = True
+        ''Label2.Visible = False
+        ''pieceP2.Location = New Point(x2, y2)
 
-        '  playerOne.Visible = True
-        ' playerTwo.Visible = False
-        'rollBtnP1.Enabled = True
-        'rollBtnP2.Enabled = False
-        ' Label1.Visible = True
-        'Label2.Visible = False
-        'pieceP2.Location = New Point(x2, y2)
+        ''firstMove()
+        ''********************************
 
-        'firstMove()
-        '********************************
-
-        If (player2 = True) Then
-            'x1 += 60
-            'pieceP1.Location = New Point(x1, y1)
-            'stepLimiter()
-            ' Mover(q, x2, y2, pieceP2)
-            Mover2()
+        'If (player2 = True) Then
+        '    'x1 += 60
+        '    'pieceP1.Location = New Point(x1, y1)
+        '    'stepLimiter()
+        '    ' Mover(q, x2, y2, pieceP2)
+        '    Mover2()
 
 
-        End If
-        If (diceLabel.Text = "6" AndAlso player2 = False) Then
-            pieceP2.Visible = True
-            '     playerTwo.Visible = False
+        'End If
+        'If (diceLabel.Text = "6" AndAlso player2 = False) Then
+        '    pieceP2.Visible = True
+        '    '     playerTwo.Visible = False
 
-            'pieceP1.Location = New Point(x1, y1)
+        '    'pieceP1.Location = New Point(x1, y1)
 
-            player2 = True
-            'p += 1
-            'pos(p) = 1
-        End If
-        'snakeBites(q, x2, y2, pieceP2)
-        'ladder(q, x2, y2, pieceP2)
-        snakeBites2()
-        ladder2()
+        '    player2 = True
+        '    'p += 1
+        '    'pos(p) = 1
+        'End If
+        ''snakeBites(q, x2, y2, pieceP2)
+        ''ladder(q, x2, y2, pieceP2)
+        'snakeBites2()
+        'ladder2()
 
     End Sub
-
     Private Sub rollDiceP1()
         Randomize()
         random = (Rnd() * 5) + 1
@@ -358,12 +375,27 @@ Public Class Form1
         diceLabel.Text = random.ToString
         'diceTimer.Start()
 
+        prevVal.Text = positionVal.Text
+        ' Timer2.Start()
+        ' Timer2.Start()
+    End Sub
+    Private Sub rollDiceP2()
+        Randomize()
+        random = (Rnd() * 5) + 1
+        dice = random
+        diceP1.Image = My.Resources.ResourceManager.GetObject("_" & random)
+        diceP1.SizeMode = PictureBoxSizeMode.StretchImage
+        diceLabel.Text = random.ToString
+        'diceTimer.Start()
+
+        prevVal2.Text = positionVal2.Text
 
     End Sub
 
     Private Sub Mover(ByRef p As Integer, ByRef x1 As Integer, ByRef y1 As Integer, ByRef pieceP1 As PictureBox)
 
         If ((dice + p) > 100) Then
+
             Return
         End If
 
@@ -375,7 +407,7 @@ Public Class Form1
             pos(p) = 1
             positionVal.Text = p.ToString
             MsgBox("You win", MsgBoxStyle.OkOnly, "Congratulations")
-            rollBtnP1.Enabled = False
+            RollBtnP1.Enabled = False
             rollBtnP2.Enabled = False
 
             Return
@@ -384,40 +416,67 @@ Public Class Form1
         For i As Integer = 1 To dice
 
             If p = 10 Then
+                'x1 = 114
+                'y1 = 446
+                'pieceP1.Location = New Point(x1, y1)
+                'Threading.Thread.Sleep(2000)
+                'x1 = 89
+                'y1 = 385
+                'pieceP1.Location = New Point(x1, y1)
+                'Threading.Thread.Sleep(2000)
+                'x1 = 66
+                'y1 = 329
+                'pieceP1.Location = New Point(x1, y1)
+                'Threading.Thread.Sleep(2000)
+                'x1 = 45
+                'y1 = 278
+                'pieceP1.Location = New Point(x1, y1)
+                'Threading.Thread.Sleep(2000)
+                wait(500)
                 x1 = 4
                 y1 = 447
+
             ElseIf p = 20 Then
+                wait(500)
                 x1 = 4
                 y1 = 393
             ElseIf p = 30 Then
+                wait(500)
                 x1 = 4
                 y1 = 339
             ElseIf p = 40 Then
+                wait(500)
                 x1 = 4
                 y1 = 285
             ElseIf p = 50 Then
+                wait(500)
                 x1 = 4
                 y1 = 231
             ElseIf p = 60 Then
+                wait(500)
                 x1 = 4
                 y1 = 177
             ElseIf p = 70 Then
+                wait(500)
                 x1 = 4
                 y1 = 123
             ElseIf p = 80 Then
+                wait(500)
                 x1 = 4
                 y1 = 69
             ElseIf p = 90 Then
+                wait(500)
                 x1 = 4
                 y1 = 15
 
             Else
+                wait(500)
                 x1 = x1 + 60
 
             End If
             pieceP1.Location = New Point(x1, y1)
             p += 1
-            pos(p) = 1
+            'pos(p) = 1
             positionVal.Text = p.ToString
 
         Next
@@ -426,31 +485,38 @@ Public Class Form1
     Private Sub snakeBites(ByRef p As Integer, ByRef x1 As Integer, ByRef y1 As Integer, ByRef pieceP1 As PictureBox)
 
         If p = 25 Then
+            wait(500)
             x1 = 244
             y1 = 501
             p = 5
 
         ElseIf p = 34 Then
+            wait(500)
             x1 = 4
             y1 = 501
             p = 1
         ElseIf p = 47 Then
+            wait(500)
             x1 = 484
             y1 = 447
             p = 19
         ElseIf p = 65 Then
+            wait(500)
             x1 = 64
             y1 = 231
             p = 52
         ElseIf p = 87 Then
+            wait(500)
             x1 = 364
             y1 = 231
             p = 57
         ElseIf p = 91 Then
+            wait(500)
             x1 = 4
             y1 = 177
             p = 61
         ElseIf p = 99 Then
+            wait(500)
             x1 = 484
             y1 = 177
             p = 69
@@ -464,26 +530,32 @@ Public Class Form1
 
         ' ****************************** FOR LADDER **************************************
         If p = 3 Then
+            wait(500)
             x1 = 4
             y1 = 231
             p = 51
         ElseIf p = 6 Then
+            wait(500)
             x1 = 364
             y1 = 393
             p = 27
         ElseIf p = 20 Then
+            wait(500)
             x1 = 544
             y1 = 177
             p = 70
         ElseIf p = 36 Then
+            wait(500)
             x1 = 244
             y1 = 231
             p = 55
         ElseIf p = 63 Then
+            wait(500)
             x1 = 244
             y1 = 20
             p = 95
         ElseIf p = 68 Then
+            wait(500)
             x1 = 424
             y1 = 20
             p = 98
@@ -507,8 +579,8 @@ Public Class Form1
             q += 1 * dice
             pos(q) = 1
             positionVal2.Text = q.ToString
-            MsgBox("You win", MsgBoxStyle.OkOnly, "Congratulations")
-            rollBtnP1.Enabled = False
+            MsgBox("You Lost!", MsgBoxStyle.OkOnly, "Defeated")
+            RollBtnP1.Enabled = False
             rollBtnP2.Enabled = False
 
             Return
@@ -517,40 +589,50 @@ Public Class Form1
         For i As Integer = 1 To dice
 
             If q = 10 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 447
             ElseIf q = 20 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 393
             ElseIf q = 30 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 339
             ElseIf q = 40 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 285
             ElseIf q = 50 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 231
             ElseIf q = 60 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 177
             ElseIf q = 70 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 123
             ElseIf q = 80 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 69
             ElseIf q = 90 Then
+                wait(500)
                 x2 = 4 + 32
                 y2 = 15
 
             Else
+                wait(500)
                 x2 = x2 + 60
 
             End If
             pieceP2.Location = New Point(x2, y2)
             q += 1
-            pos(q) = 1
+            ' pos(q) = 1
             positionVal2.Text = q.ToString
 
         Next
@@ -559,31 +641,38 @@ Public Class Form1
     Private Sub snakeBites2()
 
         If q = 25 Then
+            wait(500)
             x2 = 244 + 32
             y2 = 501
             p = 5
 
         ElseIf q = 34 Then
+            wait(500)
             x2 = 4 + 32
             y2 = 501
             q = 1
         ElseIf q = 47 Then
+            wait(500)
             x2 = 484 + 32
             y2 = 447
             q = 19
         ElseIf q = 65 Then
+            wait(500)
             x2 = 64 + 32
             y2 = 231
             q = 52
         ElseIf q = 87 Then
+            wait(500)
             x2 = 364 + 32
             y2 = 231
             q = 57
         ElseIf q = 91 Then
+            wait(500)
             x2 = 4 + 32
             y2 = 177
             q = 61
         ElseIf q = 99 Then
+            wait(500)
             x2 = 484 + 32
             y2 = 177
             q = 69
@@ -593,38 +682,92 @@ Public Class Form1
         '*********************************************************************************
     End Sub
 
+    Private Sub positionVal2_TextChanged(sender As Object, e As EventArgs)
+        RollBtnP1.Enabled = True
+        rollBtnP2.Enabled = False
+    End Sub
+
+    'Private Sub Timer2_Tick(sender As Object, e As EventArgs) Handles Timer2.Tick
+
+    '    'dice = random
+    '    'rand = New Random
+    '    Randomize()
+    '    random = (Rnd() * 5) + 1
+    '    ProgressBar1.Increment(5)
+    '    If ProgressBar1.Value = 100 Then
+    '        Timer1.Stop()
+    '        If dice = 1 Then
+    '            diceP1.Image = My.Resources._1
+    '        End If
+    '        If dice = 2 Then
+    '            diceP1.Image = My.Resources._2
+    '        End If
+    '        If dice = 3 Then
+    '            diceP1.Image = My.Resources._3
+    '        End If
+    '        If dice = 4 Then
+    '            diceP1.Image = My.Resources._4
+    '        End If
+    '        If dice = 5 Then
+    '            diceP1.Image = My.Resources._5
+    '        End If
+    '        If dice = 6 Then
+    '            diceP1.Image = My.Resources._6
+    '        End If
+    '        Mover(p, x1, y1, pieceP1)
+    '    Else
+
+    '        'rollDiceP1()
+    '        dice = random
+    '        diceP1.Image = My.Resources.ResourceManager.GetObject("_" & dice)
+    '        diceP1.SizeMode = PictureBoxSizeMode.StretchImage
+    '        diceLabel.Text = random.ToString
+
+
+    '        prevVal2.Text = positionVal2.Text
+
+
+
+    '    End If
+    'End Sub
 
     Private Sub ladder2()
 
         ' ****************************** FOR LADDER **************************************
         If q = 3 Then
+            wait(500)
             x2 = 4 + 32
             y2 = 231
             q = 51
         ElseIf q = 6 Then
+            wait(500)
             x2 = 364 + 32
             y2 = 393
             q = 27
         ElseIf q = 20 Then
+            wait(500)
             x2 = 544 + 32
             y2 = 177
             q = 70
         ElseIf q = 36 Then
+            wait(500)
             x2 = 244 + 32
             y2 = 231
             q = 55
         ElseIf q = 63 Then
+            wait(500)
             x2 = 244 + 32
             y2 = 20
             q = 95
         ElseIf q = 68 Then
+            wait(500)
             x2 = 424 + 32
             y2 = 20
             q = 98
         End If
         pieceP2.Location = New Point(x2, y2)
         positionVal2.Text = q.ToString
-        '*********************************************************************************
+        ' *********************************************************************************
 
     End Sub
 
@@ -632,4 +775,81 @@ Public Class Form1
 
     End Sub
 
+    Private Sub wait(ByVal interval As Integer)
+        Dim sw As New Stopwatch
+        sw.Start()
+        Do While sw.ElapsedMilliseconds < interval
+
+            Application.DoEvents()
+        Loop
+        sw.Stop()
+    End Sub
+
+    Private Sub btnSound()
+        Dim path As String
+        Dim sound As Media.SoundPlayer
+        path = "C:\Users\ronaricci\source\repos\Server\Server\Resources\mouseClick.mp3"
+        sound = New Media.SoundPlayer(path)
+        sound.Play()
+    End Sub
+
+    '****************************************************************************************************************************
+    '*************************************************************************************************************************************
+    Private Sub mainMenu_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        CenterToScreen()
+
+    End Sub
+
+    Private Sub Button4_Click(sender As Object, e As EventArgs)
+        Panel4.Visible = False
+    End Sub
+
+    Private Sub Button5_Click(sender As Object, e As EventArgs)
+        GroupBox1.Visible = False
+        RichTextBox2.Visible = True
+
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs)
+        RichTextBox2.Visible = False
+        GroupBox1.Visible = True
+
+    End Sub
+
+    Private Sub Button7_Click(sender As Object, e As EventArgs)
+        Me.Dispose()
+    End Sub
+
+    Private Sub Button4_Click_1(sender As Object, e As EventArgs) Handles Button4.Click
+        Panel4.Visible = False
+    End Sub
+
+    Private Sub Button5_Click_1(sender As Object, e As EventArgs) Handles Button5.Click
+        GroupBox1.Visible = False
+        RichTextBox2.Visible = True
+    End Sub
+
+    Private Sub Button6_Click_1(sender As Object, e As EventArgs) Handles Button6.Click
+        RichTextBox2.Visible = False
+        GroupBox1.Visible = True
+    End Sub
+
+    Private Sub Button7_Click_1(sender As Object, e As EventArgs) Handles Button7.Click
+        Me.Dispose()
+    End Sub
+
+    Private Sub Button8_Click(sender As Object, e As EventArgs)
+        Panel4.Visible = True
+    End Sub
+
+    Private Sub TextBox2_TextChanged(sender As Object, e As EventArgs) Handles TextBox2.TextChanged
+        RollBtnP1.Enabled = True
+        rollBtnP2.Enabled = False
+    End Sub
+
+    Private Sub positionVal2_TextChanged_1(sender As Object, e As EventArgs) Handles positionVal2.TextChanged
+        RollBtnP1.Enabled = True
+        rollBtnP2.Enabled = False
+        Label2.Visible = True
+    End Sub
 End Class

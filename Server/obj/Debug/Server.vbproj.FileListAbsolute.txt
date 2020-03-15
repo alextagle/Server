@@ -1,4 +1,3 @@
-C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbprojAssemblyReference.cache
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Form1.resources
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Resources.resources
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbproj.GenerateResource.cache
@@ -9,4 +8,9 @@ C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Server.xml
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.exe
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.xml
 C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.pdb
-C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.Form2.resources
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.loadingScreen.resources
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.mainMenu.resources
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Guna.UI.dll
+C:\Users\ronaricci\source\repos\Server\Server\bin\Debug\Guna.UI.pdb
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbproj.CopyComplete
+C:\Users\ronaricci\source\repos\Server\Server\obj\Debug\Server.vbprojAssemblyReference.cache
